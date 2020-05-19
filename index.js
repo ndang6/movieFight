@@ -54,6 +54,7 @@ const onMovieSelect = async (movie, summaryElement, side) => {
 	});
 
 	summaryElement.innerHTML = movieTemplate(response.data);
+
 	if (side === 'left') {
 		leftMovie = response.data;
 	} else {
@@ -71,8 +72,12 @@ const runComparison = () => {
 	leftSideStats.forEach((leftStat, index) => {
 		const rightStat = rightSideStats[index];
 
-		const leftSideValue = parseInt(leftStat.dataset.value);
-		const rightSideValue = parseInt(rightStat.dataset.value);
+		const leftSideValue = parseFloat(leftStat.dataset.value);
+		const rightSideValue = parseFloat(rightStat.dataset.value);
+
+		// console.log(leftSideValue);
+		// console.log(rightSideValue);
+		// console.log(rightSideValue > leftSideValue);
 
 		if (rightSideValue > leftSideValue) {
 			leftStat.classList.remove('is-primary');
@@ -89,6 +94,9 @@ const movieTemplate = (movieDetail) => {
 	const metascore = parseInt(movieDetail.Metascore);
 	const imdbRating = parseFloat(movieDetail.imdbRating);
 	const imdbVotes = parseInt(movieDetail.imdbVotes.replace(/,/g, ''));
+
+	// console.log('imdbRating', imdbRating);
+
 	const awards = movieDetail.Awards.split(' ').reduce((count, currVal) => {
 		const value = parseInt(currVal);
 
@@ -127,7 +135,7 @@ const movieTemplate = (movieDetail) => {
             <p class="title">${movieDetail.Metascore}</p>
             <p class="subtitle">Metascore</p>
         </article>
-        <article d  ata-value=${imdbRating} class="notification is-primary">
+        <article data-value=${imdbRating} class="notification is-primary">
             <p class="title">${movieDetail.imdbRating}</p>
             <p class="subtitle">IMDB Rating</p>
         </article>
